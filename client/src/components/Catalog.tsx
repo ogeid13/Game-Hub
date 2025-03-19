@@ -1,21 +1,9 @@
-import { useEffect, useState } from "react";
+import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
-import http from "axios";
-import { getGames, Game, FetchGamesResponse } from "../DataService";
-import { Box, Show, Stack, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 function Catalog() {
-  const [games, setGames] = useState<Game[]>([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    getGames()
-      .then((res) => {
-        console.log(res);
-        setGames(res.data.results);
-      })
-      .catch((err) => setError(err.message));
-  }, []);
+  const { games, error } = useGames();
 
   return (
     <>
