@@ -32,7 +32,7 @@ const useGames = () => {
 
         http.get<FetchGamesResponse>("/getGames", {signal: controller.signal})
             .then((res) => {
-                console.log(res);
+                console.log("Games", res);
                 setGames(res.data.results);
                 setLoading(false);
             })
