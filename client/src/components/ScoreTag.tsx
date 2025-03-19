@@ -13,6 +13,7 @@ function ScoreTag({ score }: Props) {
   else if (score >= 70) color = "orange";
   else color = "red";
 
+  if (score === null) return null;
   return <Tag colorScheme={color}>{score}</Tag>;
 }
 

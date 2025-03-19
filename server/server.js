@@ -15,13 +15,11 @@ app.get('/api/test', function (req, res) {
 // Rawg APIs
 const axios = require("axios")
 axios.defaults.baseURL = "https://api.rawg.io/api";
-const axiosOptions = {
-  params: {key: "1ba50861780a408b8b2870e25ca180e1"}
-}
+const rawgKey = "1ba50861780a408b8b2870e25ca180e1";
 
 app.get('/api/getGames', async function (req, res){
   let dataResult;
-  await axios.get("/games", axiosOptions).then(result => {
+  await axios.get("/games", {params: {key: rawgKey, ...req.query}}).then(result => {
     dataResult = result.data;
     res.status(200);
   }).catch(err => {
@@ -33,7 +31,7 @@ app.get('/api/getGames', async function (req, res){
 
 app.get('/api/getGenres', async function (req, res){
   let dataResult;
-  await axios.get("/genres", axiosOptions).then(result => {
+  await axios.get("/genres", {params: {key: rawgKey, ...req.query}}).then(result => {
     dataResult = result.data;
     res.status(200);
   }).catch(err => {

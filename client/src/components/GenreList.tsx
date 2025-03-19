@@ -1,8 +1,13 @@
-import { HStack, Image, Text, VStack } from "@chakra-ui/react";
-import useGenre from "../hooks/useGenre";
+import { Button, HStack, Image, Text, VStack } from "@chakra-ui/react";
+import useGenre, { Genre } from "../hooks/useGenre";
 import SkeletonGenre from "./SkeletonGenre";
 
-function GenreList() {
+interface Props {
+  onSelectGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
+}
+
+function GenreList({ onSelectGenre, selectedGenre }: Props) {
   const { data, error, isLoading } = useGenre();
   const skeletons = Array<number>(15).fill(0);
 
@@ -14,15 +19,21 @@ function GenreList() {
       </Text>
       {isLoading && skeletons.map((i, index) => <SkeletonGenre key={index} />)}
       {!isLoading &&
-        data.map((g) => (
-          <HStack key={g.id}>
+        data.map((genre) => (
+          <HStack key={genre.id}>
             <Image
-              src={g.image_background}
+              src={genre.image_background}
               height="40px"
               width="40px"
-              borderRadius={10}
+              borderRadius={8}
             ></Image>
-            <Text>{g.name}</Text>
+            <Button
+              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
+              variant={"link"}
+              onClick={() => onSelectGenre(genre)}
+            >
+              {genre.name}
+            </Button>
           </HStack>
         ))}
     </VStack>

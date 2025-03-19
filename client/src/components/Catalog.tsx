@@ -2,9 +2,14 @@ import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import { SimpleGrid, Text } from "@chakra-ui/react";
 import SkeletonCard from "./SkeletonCard";
+import { Genre } from "../hooks/useGenre";
 
-function Catalog() {
-  const { data, error, isLoading } = useGames();
+interface Props {
+  selectedGenre: Genre | null;
+}
+
+function Catalog({ selectedGenre }: Props) {
+  const { data, error, isLoading } = useGames(selectedGenre);
   const skeletons = Array<number>(15).fill(0);
 
   return (

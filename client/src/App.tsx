@@ -2,8 +2,15 @@ import { Grid, GridItem, Show } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import Catalog from "./components/Catalog";
 import GenreList from "./components/GenreList";
+import { useState } from "react";
+import { Genre } from "./hooks/useGenre";
 
 function App() {
+  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const swapGenre = (genre: Genre) => {
+    setSelectedGenre(genre);
+  };
+
   return (
     <Grid
       templateAreas={{
@@ -25,10 +32,15 @@ function App() {
         <NavBar></NavBar>
       </GridItem>
       <Show above="lg">
-        <GenreList />
+        <GenreList
+          selectedGenre={selectedGenre}
+          onSelectGenre={(genre) => {
+            swapGenre(genre);
+          }}
+        />
       </Show>
       <GridItem area={"main"}>
-        <Catalog />
+        <Catalog selectedGenre={selectedGenre} />
       </GridItem>
     </Grid>
   );
