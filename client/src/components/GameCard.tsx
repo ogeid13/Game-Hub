@@ -1,30 +1,16 @@
 import { Card, CardBody, Heading, Image, Stack, Text } from "@chakra-ui/react";
-import ImagePlacehoder from "../assets/Image Placeholder/no-image-placeholder-6f3882e0.webp";
+import { Game } from "../hooks/useGames";
 
-interface GameProps {
-  title: string;
-  desc?: string;
-  imageSrc?: string;
-  price: number;
+interface Props {
+  game: Game;
 }
 
-function GameCard(game: GameProps) {
-  let desc = game.hasOwnProperty("desc")
-    ? game.desc
-    : `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore,
-            est facere. Sit, iste voluptatem reiciendis vel alias nobis
-            molestiae! Amet culpa ullam ex non, nam eaque? Sint reprehenderit
-            earum eveniet!`;
-
+function GameCard({ game }: Props) {
   return (
-    <Card maxW="sm">
+    <Card maxW="sm" borderRadius={10} overflow="hidden">
+      <Image src={game.background_image} alt="Game Name" />
       <CardBody>
-        <Image src={game.imageSrc} alt="Game Name" borderRadius="lg"></Image>
-        <Stack>
-          <Heading size="md">{game.title}</Heading>
-          <Text>{desc}</Text>
-          <Text fontSize="2xl">${game.price}</Text>
-        </Stack>
+        <Heading fontSize="md">{game.name}</Heading>
       </CardBody>
     </Card>
   );
