@@ -41,6 +41,18 @@ app.get('/api/getGenres', async function (req, res){
   res.send(dataResult)
 })
 
+app.get('/api/getParentPlatforms', async function (req, res){
+  let dataResult;
+  await axios.get("/platforms/lists/parents", {params: {key: rawgKey, ...req.query}}).then(result => {
+    dataResult = result.data;
+    res.status(200);
+  }).catch(err => {
+    dataResult = err;
+    res.status(err.status);
+  });
+  res.send(dataResult)
+})
+
 app.listen(2000, ()=>{
     console.log("Server Started at port 2000");
 });
