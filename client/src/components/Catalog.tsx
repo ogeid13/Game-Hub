@@ -1,9 +1,11 @@
 import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import { Show, SimpleGrid, Text } from "@chakra-ui/react";
+import SkeletonCard from "./SkeletonCard";
 
 function Catalog() {
-  const { games, error } = useGames();
+  const { games, error, isLoading } = useGames();
+  const skeletons = Array<number>(15).fill(0);
 
   return (
     <SimpleGrid
@@ -11,9 +13,9 @@ function Catalog() {
       padding="10px"
       spacing={10}
     >
-      {games.map((game) => (
-        <GameCard key={game.id} game={game} />
-      ))}
+      {isLoading && skeletons.map((i, index) => <SkeletonCard key={index} />)}
+      {!isLoading &&
+        games.map((game) => <GameCard key={game.id} game={game} />)}
       {error.length > 0 && <Text color="tomato">{error}</Text>}
     </SimpleGrid>
   );
